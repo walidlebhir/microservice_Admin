@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Categorie ;
-use Illuminate\Http\Request;
 
-class CaterogieControllers extends Controller
+use Illuminate\Http\Request;
+use App\Models\Categorie;
+
+class CategorieController extends Controller
 {
     //creation des opetaion du crud pour categorie :
     public function storeCategorie(Request $request ){
         $data_creat =   $request->validate([
-            'NomCategorie ' => 'required|string' ,
-            'description' => 'required|srtring' ,
+            'NomCategorie' => 'required|string',
+            'description' => 'required|string',
 
         ]);
 
@@ -18,44 +19,42 @@ class CaterogieControllers extends Controller
 
         $datacategorie  = Categorie::where('NomCategorie' , $request->NomCategorie )->first() ;
         if($datacategorie){
-            return responsive()->json([
+            return response()->json([
                 'message' => "categorie deja existe " ,
             ]);
         }
 
-        $resulatat = Categori::create($data_creat) ;
+        $resulatat = Categorie::create($data_creat) ;
         if($resulatat){
-            return responsive()->json([
+            return response()->json([
                 'messageValidation' => "nouveaux Categorie est ajouter " ,
             ]);
         }
         else{
-            return responsive()->json([
+            return response()->json([
                 'messageEreur' => "problemme au niveaux de serveur " ,
             ]);
         }
 
-
-
     }
 
 
-    
+
 
     // supresion d'une categori :
 
-    public function deletCategori(Request $request ) {
+    public function deletCategorie(Request $request ) {
         $id_categorie = Categorie::find($request->id ) ;
 
         if($id_categorie){
-            $valide =  $id_categorie->delet();
+            $valide =  $id_categorie->delete();
             if($valide){
-                return responsive()->json([
+                return response()->json([
                     'messagevalide' => "la supresion est efectue " ,
                 ]);
             }
             else{
-                return responsive()->json([
+                return response()->json([
                     'message' => "problemme dans serveur " ,
                 ]);
             }

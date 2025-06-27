@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProduitsController;
+use App\Http\Controllers\CategorieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,22 +22,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-// les routes pour APi request :
-Route::get('/' , function (){
 
-    return "Bien venue dans Laravel Api test ";
-
-});
 
 
 // les routes pour gestion d'une Produits :
 
-Route::get('/Product' , [ProduitsController::class , 'index_Produits']);
-Route::post('/creat/product' , [ProduitsController::class , 'create_Produits']);
-Route::get('/show/produit/{id}' ,[ProduitsController::class , 'show']);
+// on utilisnat Route sous forme de midlware :
 
-Route::get('/edit/produit/{id}' , [ ProduitsController::class , 'edit' ] );
-Route::post('/update/Produit/{id}' ,[ProduitsController::class , 'update_Produit']);
+    Route::get('/Product' , [ProduitsController::class , 'index_Produits']);
+    Route::post('/creat/product' , [ProduitsController::class , 'create_Produits']);
+    Route::get('/show/produit/{id}' ,[ProduitsController::class , 'show']);
 
-Route::delete('/delet/produit' ,[ProduitsController::class , 'destroy']);
+    Route::get('/edit/produit/{id}' , [ ProduitsController::class , 'edit' ] );
+    Route::post('/update/Produit/{id}' ,[ProduitsController::class , 'update_Produit']);
+
+    Route::delete('/delet/produit' ,[ProduitsController::class , 'destroy']);
+
+
+    // route pour categorie :
+
+    Route::post('/creat/categorie' , [CategorieController::class , 'storeCategorie']);
+    Route::delete('/delete/categorie' , [CategorieController::class , 'deletCategorie']);
+
+
+
 
