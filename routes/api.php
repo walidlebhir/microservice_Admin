@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProduitsController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\UtilisateurController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +25,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
+// route prefixe :
+Route::prefix('Admin')->group(function(){
 
-// les routes pour gestion d'une Produits :
-
-// on utilisnat Route sous forme de midlware :
-
+    // gestion produits :
     Route::get('/Product' , [ProduitsController::class , 'index_Produits']);
     Route::post('/creat/product' , [ProduitsController::class , 'create_Produits']);
     Route::get('/show/produit/{id}' ,[ProduitsController::class , 'show']);
@@ -40,10 +40,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
     // route pour categorie :
-
     Route::post('/creat/categorie' , [CategorieController::class , 'storeCategorie']);
     Route::delete('/delete/categorie' , [CategorieController::class , 'deletCategorie']);
 
+    
+    // route Pour gestion des utilisateurs :
+    Route::get('/liste/utilisateur' , [UtilisateurController::class , 'list_user']);
+    Route::post('/create/user' , [UtilisateurController::class , 'create_user']);
+    Route::post('/block/compt/{id}' , [UtilisateurController::class , 'block_Compt']);
+    Route::post('/deblocker/user/{id}' , [UtilisateurController::class , 'deblock_compt']);
+    Route::delete('/delte/compt/{id}' , [UtilisateurController::class , 'delate_Compt']);
 
+
+});
 
 

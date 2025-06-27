@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('role');
-            $table->boolean('statue')->default(true) ; 
+            $table->boolean('statue')->default(true) ;
+            $table->timestamps(); 
         });
     }
 
