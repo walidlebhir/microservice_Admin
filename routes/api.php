@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProduitsController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\UtilisateurController;
-
+use App\Http\Controllers\commandeController ;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,9 +18,6 @@ use App\Http\Controllers\UtilisateurController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 
 
@@ -43,13 +40,20 @@ Route::prefix('Admin')->group(function(){
     Route::post('/creat/categorie' , [CategorieController::class , 'storeCategorie']);
     Route::delete('/delete/categorie' , [CategorieController::class , 'deletCategorie']);
 
-    
+
     // route Pour gestion des utilisateurs :
     Route::get('/liste/utilisateur' , [UtilisateurController::class , 'list_user']);
-    Route::post('/create/user' , [UtilisateurController::class , 'create_user']);
+    Route::post('/create/utilisateur' , [UtilisateurController::class , 'create_user']);
     Route::post('/block/compt/{id}' , [UtilisateurController::class , 'block_Compt']);
     Route::post('/deblocker/user/{id}' , [UtilisateurController::class , 'deblock_compt']);
     Route::delete('/delte/compt/{id}' , [UtilisateurController::class , 'delate_Compt']);
+    Route::get('Show/user/{id}' , [UtilisateurController::class , 'show_user']);
+    Route::get('commande/user/{id}' , [UtilisateurController::class , 'commandeUser']);
+
+
+    // route pour gestion des commandes  :
+
+    Route::post('/create/commande', [commandeController::class , 'create_commande']);
 
 
 });

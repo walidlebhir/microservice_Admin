@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class commande extends Model
 {
     protected $table = "commandes" ;
-    protected $fillable = ['id' , 'user_id' , 'adresse' ,  'quantite_commande' , 'statut']; 
+    protected $fillable = ['id' , 'user_id', 'produit_id' , 'adresse' ,  'quantite_commande' , 'statut'];
 }

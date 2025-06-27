@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Utilisateur ;
-use Illuminate\Support\Facades\Hash ;
+use App\Models\commande ;
 
+use Illuminate\Support\Facades\Hash ;
+use Illuminate\Support\Facades\DB ;
 
 
 class UtilisateurController extends Controller
@@ -39,7 +41,10 @@ class UtilisateurController extends Controller
     }
 
 
-    public function create_user(Request $request ){
+
+
+
+    public function create_user(Request $request){
 
         $request->validate([
             'Nom' => 'required' ,
@@ -75,6 +80,60 @@ class UtilisateurController extends Controller
 
     }
 
+
+
+    public function show_user($id){
+
+        // listage des information sur compt est les commandes efectue
+
+        try{
+            // recuperation des donnes pour user :
+            $Data_User = Utilisateur::find($id);
+
+            if($Data_User){
+                return response()->json([
+                    'dataUser' => $Data_User ,
+                ]);
+            }
+
+
+        }catch(Exception $e){
+
+            return response()->json([
+                'message_Problemme' => "Problemme dans listage des donnes " ,
+                'Erreur_get' => $e->getMessage(),
+            ]);
+        }
+
+    }
+
+
+    public function commandeUser($id){
+        // afichage des commande pour user :
+
+        try{
+            // afichage des commande qui efectue un user :
+            $commande_user = commande::where('user_id' , $id)->get();
+            if(!$commande_user->isEmpty()){
+                // routorner data user :
+                return response()->json([
+                    'commande_user' => $commande_user ,
+                ]);
+            }else{
+                return response()->json([
+                    'message' => "data not existe " ,
+                ]);
+            }
+
+
+        }catch(Exception $e){
+            return response()->json([
+                'message' => "Problemme dans serveur " ,
+                'Ereur_get' => $e->getmessage()  ,
+            ]);
+        }
+
+    }
 
 
     public function block_Compt($id){
@@ -146,7 +205,7 @@ class UtilisateurController extends Controller
             if($resultat_delete){
                 return response()->json([
                     'message_delete' => "le compt est suprumer " ,
-                ]); 
+                ]);
             }
 
         }catch(Exception $e ){
